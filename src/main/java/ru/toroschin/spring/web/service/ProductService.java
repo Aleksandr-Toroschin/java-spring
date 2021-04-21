@@ -6,6 +6,7 @@ import ru.toroschin.spring.web.model.Product;
 import ru.toroschin.spring.web.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ProductService {
@@ -16,20 +17,29 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product getProduct(int id) {
-        return productRepository.getProduct(id);
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 
-    public List<Product> getProducts() {
-        return productRepository.getProducts();
+    public Optional<Product> findOneById(Long id) {
+        return productRepository.findOneById(id);
     }
 
-    public void addProduct(Product product) {
-        productRepository.addProduct(product);
+    public void save(Product product) {
+        productRepository.save(product);
     }
 
-    public boolean isExists(Long id) {
-        return productRepository.isExists(id);
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 
+    public void incrementScore(Product product) {
+        product.incrementCost();
+        productRepository.save(product);
+    }
+
+    public void decrementScore(Product product) {
+        product.decrementCost();
+        productRepository.save(product);
+    }
 }

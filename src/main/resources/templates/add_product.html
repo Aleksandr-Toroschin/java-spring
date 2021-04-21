@@ -1,66 +1,31 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Web products</title>
-    <style>
-        .form {
-            flex-grow: 1;
-            padding: 56px;
-            background: #FFFFFF;
-            box-shadow: 5px 10px 50px rgba(16, 112, 177, 0.2);
-            border-radius: 10px;
-            width: 300px;
-            margin: 0 auto;
-        }
-        .button_submit {
-            background: #5A98D0;
-            box-shadow: 5px 20px 50px rgba(16, 112, 177, 0.2);
-            border-radius: 10px;
-            border: none;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 26px;
-            text-align: center;
-            color: #FFFFFF;
-            text-decoration: none;
-            padding-top: 23px;
-            padding-bottom: 23px;
-            display: inline-block;
-            filter: drop-shadow(5px 10px 20px rgba(16, 112, 177, 0.2));
-            width: 100%;
-            margin-top: 72px;
-        }
-        .warning {
-            color: #ff0000;
-            font-style: oblique;
-        }
 
-    </style>
+<head>
+    <meta charset="utf-8"/>
+    <title>Spring One</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </head>
+
 <body>
     <div class="container">
-        <h1 style="text-align: center">Добавить товар</h1>
-        <form method="POST" class="form" th:action="@{/products/add}">
-            <h4>Заполните параметры товара</h4>
-            <p>* Все поля обязательны для заполнения</p>
-            <label>ID</label>
-            <input type="number" name="id" th:value="${id}"><br>
-            <label>Наименование</label>
-            <input type="text" name="title" th:value="${title}"><br>
-            <label>Цена</label>
-            <input type="number" name="cost" th:value="${cost}"><br>
-            <button type="submit" class="button_submit">Добавить</button>
+        <h1>Добавить новый товар</h1>
 
-            <label class="warning" th:text="${message}"></label>
-
-            <div style="margin-top: 16px">
-                <a th:href="@{/products/all}">К списку товаров</a>
+        <form method="POST" th:action="@{/products/add}">
+            <div class="mb-3">
+                <label for="nameField" class="form-label">Наименование</label>
+                <input type="text" class="form-control" id="nameField" name="title">
             </div>
+            <div class="mb-3">
+                <label for="scoreField" class="form-label">Цена</label>
+                <input type="number" class="form-control" id="scoreField" name="cost">
+            </div>
+            <button type="submit" class="btn btn-primary">Подтвердить</button>
         </form>
+
+        <a th:href="@{/}">На главную страницу</a>
     </div>
 </body>
 </html>

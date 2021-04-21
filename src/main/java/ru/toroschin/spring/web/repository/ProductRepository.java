@@ -1,52 +1,54 @@
 package ru.toroschin.spring.web.repository;
 
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.toroschin.spring.web.model.Product;
+import ru.toroschin.spring.web.util.HibernateUtils;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Component
 public class ProductRepository {
-    private List<Product> products;
+    private HibernateUtils hibernateUtils;
 
-    @PostConstruct
-    public void init() {
-        products = new ArrayList<>();
-        products.add(new Product(1L, "Шариковая ручка", 12.5));
-        products.add(new Product(2L, "Гелевая ручка", 15));
-        products.add(new Product(3L, "Фломастер красный", 32.5));
-        products.add(new Product(4L, "Карандаш простой твердый", 7));
-        products.add(new Product(5L, "Карандаш цветной зеленый", 16.2));
+    @Autowired
+    public ProductRepository(HibernateUtils hibernateUtils) {
+        this.hibernateUtils = hibernateUtils;
     }
 
-    public boolean isExists(Long id) {
-        for (Product product : products) {
-            if (product.getId().equals(id)) {
-                return true;
-            }
+    public List<Product> findAll() {
+        try (Session session = hibernateUtils.getCurrentSession()) {
+            session.beginTransaction();
+            List<Product> products = session.createQuery("from Product").getResultList();
+            session.getTransaction().commit();
+            return products;
         }
-        return false;
     }
 
-    public Product getProduct(int id) {
-        for (Product product : products) {
-            if (product.getId()==id) {
-                return product;
-            }
+    public void save(Product product) {
+        try (Session session = hibernateUtils.getCurrentSession()) {
+            session.beginTransaction();
+            session.saveOrUpdate(product);
+            session.getTransaction().commit();
         }
-        throw new NoSuchElementException("Не найден элемент с id="+id);
     }
 
-    public List<Product> getProducts() {
-        return Collections.unmodifiableList(products);
+    public Optional<Product> findOneById(Long id) {
+        try (Session session = hibernateUtils.getCurrentSession()) {
+            session.beginTransaction();
+            Optional<Product> product = Optional.ofNullable(session.get(Product.class, id));
+            session.getTransaction().commit();
+            return product;
+        }
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
+    public void deleteById(Long id) {
+        try (Session session = hibernateUtils.getCurrentSession()) {
+            session.beginTransaction();
+            session.createQuery("delete from Product p where p.id = " + id).executeUpdate();
+            session.getTransaction().commit();
+        }
     }
 
 }

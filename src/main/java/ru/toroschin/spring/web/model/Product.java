@@ -1,26 +1,38 @@
 package ru.toroschin.spring.web.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Products")
 public class Product {
-    private final Long id;
-    private final String title;
-    private final double cost;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-    public Product(Long id, String title, double cost) {
-        this.id = id;
-        this.title = title;
-        this.cost = cost;
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "cost")
+    private double cost;
+
+    public void incrementCost() {
+        if (cost < Integer.MAX_VALUE) {
+            cost++;
+        }
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public double getCost() {
-        return cost;
+    public void decrementCost() {
+        if (cost > 0) {
+            cost--;
+        }
     }
 
     @Override
