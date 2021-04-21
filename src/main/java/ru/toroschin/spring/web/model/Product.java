@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Products")
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,10 @@ public class Product {
 
     @Column(name = "cost")
     private double cost;
+
+    @ManyToOne
+    @JoinColumn(name = "id_category")
+    private Category category;
 
     public void incrementCost() {
         if (cost < Integer.MAX_VALUE) {
@@ -39,7 +43,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", '" + title + '\''
-                + "}";
+                ", title=" + title + '\'' +
+                ", cost=" + cost + "}";
     }
 }

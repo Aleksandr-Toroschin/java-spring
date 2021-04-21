@@ -21,6 +21,7 @@
         <thead>
         <tr>
             <th>ID</th>
+            <th>Категория</th>
             <th>Название</th>
             <th>Цена</th>
             <th>Действия</th>
@@ -29,6 +30,7 @@
         <tbody>
         <tr th:each="p : ${products}">
             <td th:text="${p.id}"/>
+            <td th:text="${p.category.title}"/>
             <td th:text="${p.title}"/>
             <td>
                 <a class="btn btn-outline-primary" th:href="@{'/products/decrement/'+${p.id}}">-</a>

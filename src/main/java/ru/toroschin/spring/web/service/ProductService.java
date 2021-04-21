@@ -42,4 +42,8 @@ public class ProductService {
         product.decrementCost();
         productRepository.save(product);
     }
+
+    public List<Product> findByCategory(Long id) {
+        return productRepository.findByCategory(id);
+    }
 }

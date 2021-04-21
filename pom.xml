@@ -12,7 +12,7 @@
 	<artifactId>web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>web</name>
-	<description>Homework3 Spring Boot</description>
+	<description>Homework6 Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

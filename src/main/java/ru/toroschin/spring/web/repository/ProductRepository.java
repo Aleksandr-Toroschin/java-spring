@@ -3,6 +3,7 @@ package ru.toroschin.spring.web.repository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.toroschin.spring.web.model.Category;
 import ru.toroschin.spring.web.model.Product;
 import ru.toroschin.spring.web.util.HibernateUtils;
 
@@ -51,4 +52,13 @@ public class ProductRepository {
         }
     }
 
+    public List<Product> findByCategory(Long id) {
+        try (Session session = hibernateUtils.getCurrentSession()) {
+            session.beginTransaction();
+            Category category = session.get(Category.class, id);
+            List<Product> products = category.getProducts();
+            session.getTransaction().commit();
+            return products;
+        }
+    }
 }

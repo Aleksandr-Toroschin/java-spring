@@ -73,4 +73,11 @@ public class ProductController {
         return "redirect:/";
     }
 
+    @GetMapping("/filter")
+    public String filterByCategory(@RequestParam(name = "category") Long id, Model model) {
+        List<Product> products = productService.findByCategory(id);
+        model.addAttribute("products", products);
+        return "index";
+    }
+
 }
