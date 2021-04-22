@@ -30,7 +30,9 @@
         <tbody>
         <tr th:each="p : ${products}">
             <td th:text="${p.id}"/>
-            <td th:text="${p.category.title}"/>
+            <td>
+                <a th:text="${p.category.title}" th:href="@{'/filter?category='+${p.category.id}}"/>
+            </td>
             <td th:text="${p.title}"/>
             <td>
                 <a class="btn btn-outline-primary" th:href="@{'/products/decrement/'+${p.id}}">-</a>

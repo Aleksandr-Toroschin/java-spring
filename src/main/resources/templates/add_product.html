@@ -15,6 +15,10 @@
 
         <form method="POST" th:action="@{/products/add}">
             <div class="mb-3">
+                <label for="idcatField" class="form-label">ID категории</label>
+                <input type="number" class="form-control" id="idcatField" name="id_category">
+            </div>
+            <div class="mb-3">
                 <label for="nameField" class="form-label">Наименование</label>
                 <input type="text" class="form-control" id="nameField" name="title">
             </div>

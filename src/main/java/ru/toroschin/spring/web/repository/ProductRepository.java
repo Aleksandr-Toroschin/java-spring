@@ -47,18 +47,9 @@ public class ProductRepository {
     public void deleteById(Long id) {
         try (Session session = hibernateUtils.getCurrentSession()) {
             session.beginTransaction();
-            session.createQuery("delete from Product p where p.id = " + id).executeUpdate();
+            session.createNamedQuery("deleteById").setParameter("id", id).executeUpdate();
             session.getTransaction().commit();
         }
     }
 
-    public List<Product> findByCategory(Long id) {
-        try (Session session = hibernateUtils.getCurrentSession()) {
-            session.beginTransaction();
-            Category category = session.get(Category.class, id);
-            List<Product> products = category.getProducts();
-            session.getTransaction().commit();
-            return products;
-        }
-    }
 }

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+@NamedQueries({
+        @NamedQuery(name = "withProducts", query = "Select c FROM Category c JOIN FETCH c.products WHERE c.id=:id")
+})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +24,7 @@ public class Category {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category") //, fetch = FetchType.EAGER
     private List<Product> products;
 
     @Override

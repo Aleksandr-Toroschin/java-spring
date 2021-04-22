@@ -42,13 +42,13 @@ public class ProductController {
     }
 
     @PostMapping("/products/add")
-    public String addProduct(@ModelAttribute Product product) {
-        productService.save(product);
+    public String addProduct(@RequestParam String title, @RequestParam int cost, @RequestParam Long id_category) {
+        productService.saveWithCategory(title, cost, id_category);
         return "redirect:/";
     }
 
     @GetMapping("/products/delete/{id}")
-    public String deleteStudentById(@PathVariable Long id) {
+    public String deleteProductById(@PathVariable Long id) {
         productService.deleteById(id);
         return "redirect:/";
     }
@@ -73,11 +73,6 @@ public class ProductController {
         return "redirect:/";
     }
 
-    @GetMapping("/filter")
-    public String filterByCategory(@RequestParam(name = "category") Long id, Model model) {
-        List<Product> products = productService.findByCategory(id);
-        model.addAttribute("products", products);
-        return "index";
-    }
+
 
 }

@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NamedQueries({
+        @NamedQuery(name = "deleteById", query = "delete from Product p where p.id = :id")
+})
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,11 +24,18 @@ public class Product {
     private String title;
 
     @Column(name = "cost")
-    private double cost;
+    private int cost;
 
     @ManyToOne
-    @JoinColumn(name = "id_category")
+    @JoinColumn(name = "id_category",
+            foreignKey = @ForeignKey(name = "FK_PRODUCT_ID"))
     private Category category;
+
+    public Product(String title, int cost, Category category) {
+        this.title = title;
+        this.cost = cost;
+        this.category = category;
+    }
 
     public void incrementCost() {
         if (cost < Integer.MAX_VALUE) {
