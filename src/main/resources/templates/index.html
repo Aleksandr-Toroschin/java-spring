@@ -13,9 +13,21 @@
 <div class="container">
     <h1>Каталог</h1>
     <form class="d-flex" method="POST" th:action="@{/products/find}">
-        <input type="text" class="form-control me-2" placeholder="Поиск по ID" aria-label="Поиск по ID"
+        <input type="text" class="form-control me-2" placeholder="ID товара" aria-label="ID товара"
                aria-describedby="button-addon2" name="id">
         <button class="btn btn-outline-primary" type="submit" id="button-addon2">Поиск</button>
+    </form>
+    <form class="d-flex" method="POST" th:action="@{/products/price-between}">
+        <input type="text" class="form-control me-2" placeholder="Min цена" aria-label="Min цена"
+               aria-describedby="button-addon3" name="minprice">
+        <input type="text" class="form-control me-2" placeholder="Max цена" aria-label="Max цена"
+               aria-describedby="button-addon3" name="maxprice">
+        <button class="btn btn-outline-primary" type="submit" id="button-addon3">Поиск</button>
+    </form>
+    <form class="d-flex" method="POST" th:action="@{/products/title-like}">
+        <input type="text" class="form-control me-2" placeholder="Название" aria-label="Название"
+               aria-describedby="button-addon4" name="title">
+        <button class="btn btn-outline-primary" type="submit" id="button-addon4">Поиск</button>
     </form>
     <table class="table table-hover">
         <thead>
@@ -33,11 +45,13 @@
             <td>
                 <a th:text="${p.category.title}" th:href="@{'/filter?category='+${p.category.id}}"/>
             </td>
-            <td th:text="${p.title}"/>
             <td>
-                <a class="btn btn-outline-primary" th:href="@{'/products/decrement/'+${p.id}}">-</a>
+                <a th:text="${p.title}" th:href="@{'/products/find?id='+${p.id}}"/>
+            <td/>
+            <td>
+<!--                <a class="btn btn-outline-primary" th:href="@{'/products/decrement/'+${p.id}}">-</a>-->
                 <span th:text="${p.cost}"/>
-                <a class="btn btn-outline-primary" th:href="@{'/products/increment/'+${p.id}}">+</a>
+<!--                <a class="btn btn-outline-primary" th:href="@{'/products/increment/'+${p.id}}">+</a>-->
             </td>
             <td>
                 <a class="btn btn-danger" th:href="@{'/products/delete/' + ${p.id}}">Удалить запись</a>

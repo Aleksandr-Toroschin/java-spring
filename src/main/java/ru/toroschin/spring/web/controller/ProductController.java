@@ -33,6 +33,33 @@ public class ProductController {
         return "product_info";
     }
 
+    @GetMapping("/products/find")
+    public String getProduct(@RequestParam(name = "id") Long id, Model model) {
+        productService.findOneById(id).ifPresent(p -> model.addAttribute("product", p));
+        return "product_info";
+    }
+
+    @PostMapping("/products/price-between")
+    public String filterProductsByPrice(@RequestParam(name = "minprice", required = false) Integer minPrice,
+                                        @RequestParam(name = "maxprice", required = false) Integer maxPrice,
+                                        Model model) {
+        List<Product> products = productService.findProductsByPrice(minPrice, maxPrice);
+        if (products.size()>0) {
+            model.addAttribute("products", products);
+        }
+        return "index";
+    }
+
+    @PostMapping("/products/title-like")
+    public String filterProductsByPrice(@RequestParam(name = "title", required = false) String title,
+                                        Model model) {
+        List<Product> products = productService.findAllByTitle(title);
+        if (products.size()>0) {
+            model.addAttribute("products", products);
+        }
+        return "index";
+    }
+
     @GetMapping("/products/add")
     public String showAddProduct(Model model) {
         model.addAttribute("message", "");
@@ -54,25 +81,15 @@ public class ProductController {
     }
 
     @GetMapping("/products/increment/{id}")
-    public String incrementScore(@PathVariable(name = "id") Long id, Model model) {
-        Optional<Product> product = productService.findOneById(id);
-        if (product.isPresent()) {
-            productService.incrementScore(product.get());
-            model.addAttribute("product", product.get());
-        }
+    public String incrementScore(@PathVariable(name = "id") Long id) {
+        productService.incrementScore(id);
         return "redirect:/";
     }
 
     @GetMapping("/products/decrement/{id}")
-    public String decrementScore(@PathVariable(name = "id") Long id, Model model) {
-        Optional<Product> product = productService.findOneById(id);
-        if (product.isPresent()) {
-            productService.decrementScore(product.get());
-            model.addAttribute("product", product.get());
-        }
+    public String decrementScore(@PathVariable(name = "id") Long id) {
+        productService.decrementScore(id);
         return "redirect:/";
     }
-
-
 
 }

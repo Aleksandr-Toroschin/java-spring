@@ -10,7 +10,6 @@ import ru.toroschin.spring.web.model.Product;
 import ru.toroschin.spring.web.service.CategoryService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -24,8 +23,10 @@ public class CategoryController {
 
     @GetMapping("/filter")
     public String filterByCategory(@RequestParam(name = "category") Long id, Model model) {
-        Optional<List<Product>> products = categoryService.findProductsByCategory(id);
-        products.ifPresent(p -> model.addAttribute("products", products.get()));
+        List<Product> products = categoryService.findProductsByCategory(id);
+        if (products.size()>0) {
+            model.addAttribute("products", products);
+        }
         return "index";
     }
 }
