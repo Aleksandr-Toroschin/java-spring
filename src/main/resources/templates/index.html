@@ -29,6 +29,16 @@
                aria-describedby="button-addon4" name="title">
         <button class="btn btn-outline-primary" type="submit" id="button-addon4">Поиск</button>
     </form>
+
+    <form class="d-flex" method="POST" th:action="@{/products/filter}">
+        <input type="text" class="form-control me-2" placeholder="Min цена" aria-label="Min цена"
+               aria-describedby="button-addon5" name="minprice">
+        <input type="text" class="form-control me-2" placeholder="Max цена" aria-label="Max цена"
+               aria-describedby="button-addon5" name="maxprice">
+        <input type="text" class="form-control me-2" placeholder="Название" aria-label="Название"
+               aria-describedby="button-addon5" name="title">
+        <button class="btn btn-outline-primary" type="submit" id="button-addon5">Поиск</button>
+    </form>
     <table class="table table-hover">
         <thead>
         <tr>

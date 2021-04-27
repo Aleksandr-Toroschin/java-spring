@@ -65,6 +65,22 @@ public class ProductService {
     }
 
     public List<Product> findAllByTitle(String title) {
-        return productRepository.hqlFindAllByTitle(title);
+        return productRepository.findAllByTitleLike("%"+title+"%");
+//        return productRepository.hqlFindAllByTitle(title);
+    }
+
+    public List<Product> findProductsByFilter(Integer minPrice, Integer maxPrice, String title) {
+        if (minPrice == null) {
+            minPrice = 0;
+        }
+        if (title == null) {
+            title = "%";
+        } else {
+            title = "%" + title + "%";
+        }
+        if (maxPrice == null) {
+            return productRepository.findAllByCostGreaterThanEqualAndTitleLike(minPrice, title);
+        }
+        return productRepository.findAllByCostBetweenAndTitleLike(minPrice, maxPrice, title);
     }
 }

@@ -44,7 +44,7 @@ public class ProductController {
                                         @RequestParam(name = "maxprice", required = false) Integer maxPrice,
                                         Model model) {
         List<Product> products = productService.findProductsByPrice(minPrice, maxPrice);
-        if (products.size()>0) {
+        if (products.size() > 0) {
             model.addAttribute("products", products);
         }
         return "index";
@@ -54,7 +54,19 @@ public class ProductController {
     public String filterProductsByPrice(@RequestParam(name = "title", required = false) String title,
                                         Model model) {
         List<Product> products = productService.findAllByTitle(title);
-        if (products.size()>0) {
+        if (products.size() > 0) {
+            model.addAttribute("products", products);
+        }
+        return "index";
+    }
+
+    @PostMapping("/products/filter")
+    public String filterProductsByFilter(@RequestParam(name = "minprice", required = false) Integer minPrice,
+                                         @RequestParam(name = "maxprice", required = false) Integer maxPrice,
+                                         @RequestParam(name = "title", required = false) String title,
+                                         Model model) {
+        List<Product> products = productService.findProductsByFilter(minPrice, maxPrice, title);
+        if (products.size() > 0) {
             model.addAttribute("products", products);
         }
         return "index";
